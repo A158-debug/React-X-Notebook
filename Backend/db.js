@@ -6,3 +6,6 @@ const connectToMongo = ()=>{
     })
 }
 module.exports = connectToMongo
+
+
+// We will open two powershell windows. In the first, we will write mongod and in the second we will write mongo and then run both the files 
