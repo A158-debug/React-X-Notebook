@@ -9,12 +9,12 @@ const NoteSchema = new Schema({
     desciption: {
         required: true,
         type: String,
-        
+
     },
-    tag:{
+    tag: {
         type: String,
         default: "General"
-    
+
     },
     Date: {
         type: Date,
@@ -24,5 +24,5 @@ const NoteSchema = new Schema({
 
 });
 
-module.exports = mongoose.model('NotesSchema',NoteSchema);
+module.exports = mongoose.model('NotesSchema', NoteSchema);
 // 1st paramter is schema name and other is schema which you want to use

@@ -1,21 +1,20 @@
 {
-  "name": "i-notebook",
+  "name": "cloudbook",
   "version": "1.0.0",
-  "description": "A place where u store your book and data on cloud",
+  "description": "You can store your notes on cloudbook",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "express": "^4.17.1",
     "express-validator": "^6.13.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.0.12"
-  },
-  "devDependencies": {
+    "mongoose": "^6.0.12",
     "nodemon": "^2.0.15"
-  }
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
 }

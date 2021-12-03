@@ -9,20 +9,19 @@ const UserSchema = new Schema({
     email: {
         required: true,
         type: String,
-        unique:true,
+        unique: true,
     },
-    password:{
+    password: {
         type: String,
         required: true,
     },
-    date: {
+    Date: {
         type: Date,
         default: Date.now
         // default :Date.now()   don;t put paranthesis here our run when we call them
     },
 
 });
-const UserSchema1 = mongoose.model('UserSchema',UserSchema);
-UserSchema1.create()
-module.exports = UserSchema1;
+const User = mongoose.model('UserSchema', UserSchema);
+module.exports = User;
 // 1st paramter is schema name and other is schema which you want to use

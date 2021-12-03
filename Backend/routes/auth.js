@@ -4,6 +4,8 @@ const UserSchema1 = require('../models/User')
 const router = express.Router()
 const bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
+var fetchuser = require('../middleware/fetchuser');
+const JWT_SECRET = 'wantToBuyLamborghini$16';
 
 //ROUTE: 1 create a user using POSt "/api/auth/createuser"
 router.get('/createuser', [ //add validation
@@ -30,11 +32,22 @@ router.get('/createuser', [ //add validation
         const secPass = await bcrypt.hash(req.body.password,salt);
 
         //create  a new user
-        createUser = await UserSchema1.create({
+        user = await UserSchema1.create({
             name : req.body.name,
             password:secPass,
             email  : req.body.email,
-        });  
+        }); 
+        const data = {
+            user: {
+              id: user.id
+            }
+          }
+          const authtoken = jwt.sign(data, JWT_SECRET);
+      
+      
+          res.json(user)
+          res.json({ authtoken }) 
+
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Internal Server Error");
@@ -61,13 +74,21 @@ router.post('/login',[
             return res.status(400).json({error:"Please try to log in with correct creditials"});
 
         }
-        const passwordCompare = await bcrypt.compare(password,createUser.password)
+        const passwordCompare = await bcrypt.compare(password,user.password)
         if(!passwordCompare) {
             success = false
             return res.status(400).json({success,error:"Please try to log in with correct creditials"});
 
         }
-
+        const data = {
+            user: {
+              id: user.id
+            }
+          }
+          const authtoken = jwt.sign(data, JWT_SECRET);
+          success = true;
+          res.json({ success, authtoken })
+          
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Internal server error");     
@@ -79,7 +100,7 @@ router.post('/login',[
 router.post('/getuser',fetchuser,async (req,res)=>{
 
     try {
-        userId = req.user.id;
+        let userId = req.user.id;
         const user = await UserSchema1.findById(userId).select("-password")
         res.send(user)
         
