@@ -22,6 +22,7 @@ const UserSchema = new Schema({
     },
 
 });
-
-module.exports = mongoose.model('UserSchema',UserSchema);
+const UserSchema1 = mongoose.model('UserSchema',UserSchema);
+UserSchema1.create()
+module.exports = UserSchema1;
 // 1st paramter is schema name and other is schema which you want to use
