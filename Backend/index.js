@@ -3,13 +3,15 @@ const connectToMongo = require('./db');
 connectToMongo()
 
 const app = express();
-const port = 3000;
+const port = 5000;
 
 app.use(express.json())
 
 // Routers
 app.use('/api/auth', require('./routes/auth'))
-// app.get('api/notes',require('./routes/notes'))
+app.get('api/notes',require('./routes/notes'))
+
+//Listening to the port
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });

@@ -5,11 +5,13 @@ const router = express.Router()
 var fetchuser = require('../middleware/fetchuser');
 
 //ROUTER 1: Get all the notes using get "api/notes/getuser"
+//fetchuser is a middleware
 router.get('/fetchallnotes', fetchuser, async (req, res) => {
-    try {
 
+    try {
         const notes = NotesSchema.find({ user: req.user.id })
         res.json(notes);
+
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Internal server error");
@@ -31,10 +33,11 @@ router.post('/addnote', fetchuser, [
         }
         const note = new NotesSchema({
             title, desciption, tag, user: req.user.id
-
         })
+
         const savedNote = await note.save()
         res.json(savedNote)
+
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Internal Server Error");
@@ -46,13 +49,13 @@ router.post('/addnote', fetchuser, [
 router.put('/updatenotes/id', fetchuser, async (req, res) => {
     const { title, desciption, tag } = req.body;
     try {
-        //Update an existing note usingc
+        //Update an existing note using
         const updateNote = {};
         if (title) { updateNote.title = title }
         if (desciption) { updateNote.desciption = desciption }
         if (tag) { updateNote.tag = tag }
 
-        //Find the note to be updates and update it
+        //Find the note to be updated and update it
         let note = await NotesSchema.findById(req.params.id);
         if (!note) {
             return res.status(400).send("Not Found")
@@ -74,17 +77,18 @@ router.put('/updatenotes/id', fetchuser, async (req, res) => {
 //Route :4 Delete an existing Note using DELETE "/api/notes/deletenote"
 router.delete('/deletenote/:id', fetchuser, async (req, res) => {
     try {
-        //find anote to be deleted
+        //find a note to be deleted
         let note = await NotesSchema.findById(req.params.id)
         if (!note) {
             return res.status(404).send("Not Found");
         }
         //Allow deletion only if user own his note
         if (note.user.toString() !== req.user.id) {
-            return res.status(404).send("Not Found");
+            return res.status(404).send("Not Allowed");
         }
         note = await NotesSchema.findByIdAndDelete(req.params.id);
-        res.json({ "Success": "Note has been deleted successfully,note:note" });
+        res.json({ "Success": "Note has been deleted successfully",note:note });
+        
     } catch (error) {
         console.log(error.message);
         res.status(500).send("Internal Server Error");
