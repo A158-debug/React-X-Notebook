@@ -13,5 +13,5 @@ app.get('api/notes',require('./routes/notes'))
 
 //Listening to the port
 app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+  console.log(`i-Notebook run on server http://localhost:${port}`);
 });
