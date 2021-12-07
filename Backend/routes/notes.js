@@ -1,15 +1,15 @@
 const express = require('express')
 const { body, validationResult } = require('express-validator');
-const NotesSchema = require('../models/Notes')
+const NotesSchema = require('../models/Notes');
 const router = express.Router()
-var fetchuser = require('../middleware/fetchuser');
+const fetchuser = require('../middleware/fetchuser');
 
 //ROUTER 1: Get all the notes using get "api/notes/getuser"
 //fetchuser is a middleware
 router.get('/fetchallnotes', fetchuser, async (req, res) => {
 
     try {
-        const notes = NotesSchema.find({ user: req.user.id })
+        const notes = await  NotesSchema.find({ user: req.user.id })
         res.json(notes);
 
     } catch (error) {
@@ -22,17 +22,19 @@ router.get('/fetchallnotes', fetchuser, async (req, res) => {
 
 router.post('/addnote', fetchuser, [
     body('title', 'Enter a valid title').isLength({ min: 3 }),
-    body('description', 'Description must be at least 5 character').isLength({ min: 5 }),
+    body('description', 'Description must be at least 5 character').isLength({ min: 5 }),],
+    
+    async (req, res) => {
 
-], async (req, res) => {
     try {
-        const { title, desciption, tag } = req.body;
-        const error = validationResult(req);
-        if (!error.isEmpty()) {
-            return res.status(400).json({ error: error.array() });
+        const { title, description, tag } = req.body;
+
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
         }
         const note = new NotesSchema({
-            title, desciption, tag, user: req.user.id
+            title, description, tag, user: req.user.id
         })
 
         const savedNote = await note.save()
@@ -44,15 +46,15 @@ router.post('/addnote', fetchuser, [
     }
 })
 
-//Route 3 : update an existing note using put "/api/notes/updates"
+//Route 3 : update an existing note using put "/api/notes/updatenotes"
 
-router.put('/updatenotes/id', fetchuser, async (req, res) => {
-    const { title, desciption, tag } = req.body;
+router.put('/updatenotes/:id', fetchuser, async (req, res) => {
+    const { title, description, tag } = req.body;
     try {
         //Update an existing note using
         const updateNote = {};
         if (title) { updateNote.title = title }
-        if (desciption) { updateNote.desciption = desciption }
+        if (description) { updateNote.description = description }
         if (tag) { updateNote.tag = tag }
 
         //Find the note to be updated and update it

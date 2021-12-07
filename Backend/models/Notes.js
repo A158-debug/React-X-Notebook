@@ -2,11 +2,16 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const NoteSchema = new Schema({
+
+    user:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user'
+    },
     title: {
         required: true,
         type: String,
     },
-    desciption: {
+    description: {
         required: true,
         type: String,
 
@@ -16,7 +21,7 @@ const NoteSchema = new Schema({
         default: "General"
 
     },
-    Date: {
+    date: {
         type: Date,
         default: Date.now
         // default :Date.now()   don;t put paranthesis here our run when we call them
