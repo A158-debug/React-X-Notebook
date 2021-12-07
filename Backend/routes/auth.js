@@ -15,16 +15,17 @@ router.get('/createuser', [
     body('email', 'Enter a valid email').isEmail(),                      //  email validation
     body('password', 'Enter a valid password').isLength({ min: 5 }),     // password must be at least 5 chars long
 ], async (req, res) => {
+    let success = false;
 
     //if there is an  error send the bad request
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        return res.status(400).json({success, errors: errors.array() });
     }
 
     try {
         //check whether the email of user already exist or not
-        let user = await UserSchema1.findOne({ email: req.body.email });
+        let user = await UserSchema1.findOne({success, email: req.body.email });
         if (user) {
             return res.status(400).json({ error: "sorry user of this email is already exist" });
         }
@@ -46,8 +47,9 @@ router.get('/createuser', [
             }
         }
         const authtoken = jwt.sign(data, JWT_SECRET);  //It give me token
+        success = true;
         // res.json(user)
-        res.json({ authtoken })
+        res.json({success, authtoken })
 
     } catch (error) {
         console.error(error.message);

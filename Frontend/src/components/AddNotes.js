@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 
 import noteContext from '../Context/NotesUser/noteContext'
 
-export const AddNotes = () => {
+const AddNotes = () => {
     const context = useContext(noteContext);
     const { addNote } = context;
 
@@ -46,3 +46,5 @@ export const AddNotes = () => {
         </div>
     )
 }
+
+export default AddNotes

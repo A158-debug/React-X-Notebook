@@ -1,9 +1,10 @@
 import React from 'react'
 
-export const NoteState = () => {
+const NoteState = () => {
     return (
         <div>
             
         </div>
     )
 }
+export default NoteState
