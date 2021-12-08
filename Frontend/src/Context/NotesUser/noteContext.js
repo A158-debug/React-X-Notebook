@@ -1,7 +1,7 @@
 import {createContext} from 'react';
 
-const noteContext = createContext();
-export default  noteContext;
+const NoteContext = createContext();
+export default  NoteContext;
 
 // React context allows us to pass down and use (consume) data in whatever component we need in our React app without using props.
 
