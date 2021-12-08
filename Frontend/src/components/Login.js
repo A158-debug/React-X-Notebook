@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import pic2 from '../pic2.jpg'
+import pic3 from '../pic3.png'
 
 
 
@@ -80,7 +80,7 @@ const Login = (props) => {
                     </div>
                 </div>
                 <div className="col-md-7">
-                    <img src={pic2} alt="" srcset="" className='img-fluid' />
+                    <img src={pic3} alt="" srcset="" className='img-fluid' />
                 </div>
 
             </div>

@@ -38,11 +38,15 @@ const Notes = (props) => {
     const onChange = (e) => {
         setNote({ ...note, [e.target.name]: e.target.value })
     }
+    const label = {
+        color: '#1d1160',
+        fontWeight: 'bold'
+    }
 
     return (
-        <>
+        <>  
             <AddNotes />
-            <button type="button" ref={ref} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button type="button" ref={ref} style={{ display: 'none' }} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Launch demo model
             </button>
 
@@ -50,40 +54,40 @@ const Notes = (props) => {
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">Edit Note</h5>
+                            <h5 className="modal-title" id="exampleModalLabel" style={{ color: "#33006F", fontWeight: 'bold' }}>Edit Note</h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
                             <form className='my-3'>
                                 {/* For Titile */}
                                 <div className="mb-3">
-                                    <label htmlFor="title" className="form-label">Title</label>
+                                    <label htmlFor="title" className="form-label" style={label}>Title</label>
                                     <input type="text" className="form-control" id='etitle' name='etitle' aria-describedby="emailHelp" value={note.etitle} onChange={onChange} minLength={5} required />
                                 </div>
 
                                 {/* for Desciption */}
                                 <div className="mb-3">
-                                    <label htmlFor="description" className="form-label">Description</label>
-                                    <input type="text" className="form-control id='edescription" name="edescription" value={note.edescription} onChange={onChange} minLength={5} required />
+                                    <label htmlFor="description" className="form-label" style={label}>Description</label>
+                                    <textarea rows='5' type="text" className="form-control id='edescription" name="edescription" value={note.edescription} onChange={onChange} minLength={5} required ></textarea>
                                 </div>
 
                                 {/* for tag */}
                                 <div className="mb-3">
-                                    <label htmlFor="tag" className="form-label">Tag</label>
+                                    <label htmlFor="tag" className="form-label" style={label}>Tag</label>
                                     <input type="text" className="form-control" id='etag' name='etag' value={note.etag} onChange={onChange} />
                                 </div>
                             </form>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" ref={refClose} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button disabled={note.etitle.length < 5 || note.edescription.length < 5} type="button" className="btn btn-primary" onClick={handleClick}>Update Note</button>
+                            <button type="button" ref={refClose} className="btn btn-outline-dark" data-bs-dismiss="modal">Close</button>
+                            <button disabled={note.etitle.length < 5 || note.edescription.length < 5} type="button" className="btn btn-outline-primary" onClick={handleClick}>Update Note</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div className="row my-3">
-                <h2>You Notes</h2>
+            <div className="row mt-5">
+                <h2 style={{ color: "#FF0000", fontWeight: 'bold' }} className="my-2">YOUR NOTES </h2>
                 <div className="container mx-2">
                     {notes.length === 0 && 'No notes to display'}
                 </div>
